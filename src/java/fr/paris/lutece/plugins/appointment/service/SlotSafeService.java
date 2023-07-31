@@ -390,10 +390,11 @@ public final class SlotSafeService
             return appointment.getIdAppointment( );
 
         }
-        catch( Exception e )
+        catch( InterruptedException e )
         {
             TransactionManager.rollBack( AppointmentPlugin.getPlugin( ) );
             AppLogService.error( "Error Save appointment " + e.getMessage( ), e );
+            Thread.currentThread().interrupt();
             throw new SlotFullException( e.getMessage( ), e );
         }
         finally
